@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PlayMuzio</string>
+    <string name="error_authorization">Authorization Error</string>
 </resources>
