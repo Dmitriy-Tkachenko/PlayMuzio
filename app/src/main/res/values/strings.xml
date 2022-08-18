@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PlayMuzio</string>
     <string name="error_authorization">Authorization Error</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

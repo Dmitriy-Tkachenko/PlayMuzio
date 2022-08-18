@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- activity_login -->
+    <dimen name="iv_no_internet_connection_width">60dp</dimen>
+    <dimen name="iv_no_internet_connection_height">60dp</dimen>
+    <dimen name="tv_no_internet_connection_size">16sp</dimen>
+</resources>

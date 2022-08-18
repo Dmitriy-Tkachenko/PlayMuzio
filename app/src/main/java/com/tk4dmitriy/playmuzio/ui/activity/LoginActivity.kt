@@ -1,16 +1,18 @@
 package com.tk4dmitriy.playmuzio.ui.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.tk4dmitriy.playmuzio.R
+import com.tk4dmitriy.playmuzio.utils.ConnectionLiveData
 import com.tk4dmitriy.playmuzio.utils.Constants
 import com.tk4dmitriy.playmuzio.utils.TAG
 
@@ -19,9 +21,36 @@ private const val REDIRECT_URI = "com.tk4dmitriy.playmuzio://callback"
 private const val AUTH_CODE = 100
 
 class LoginActivity: AppCompatActivity() {
+    private lateinit var connectionLiveData: ConnectionLiveData
+    private lateinit var ivNoInternetConnection: ImageView
+    private lateinit var tvNoInternetConnection: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authorization()
+        setContentView(R.layout.activity_login)
+
+        ivNoInternetConnection = findViewById(R.id.iv_no_internet_connection)
+        tvNoInternetConnection = findViewById(R.id.tv_no_internet_connection)
+
+        connectionLiveData = ConnectionLiveData(application)
+        connectionLiveData.observe(this) { networkAvailable ->
+            if (networkAvailable) {
+                noVisibleInternetConnection()
+                authorization()
+            } else {
+                visibleInternetConnection()
+            }
+        }
+    }
+
+    private fun visibleInternetConnection() {
+        ivNoInternetConnection.visibility = View.VISIBLE
+        tvNoInternetConnection.visibility = View.VISIBLE
+    }
+
+    private fun noVisibleInternetConnection() {
+        ivNoInternetConnection.visibility = View.GONE
+        tvNoInternetConnection.visibility = View.GONE
     }
 
     private fun authorization() {
@@ -59,6 +88,7 @@ class LoginActivity: AppCompatActivity() {
         Log.d(TAG, Constants.TOKEN)
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
+        finishAffinity()
     }
 
     private fun processingError(error: String) {
