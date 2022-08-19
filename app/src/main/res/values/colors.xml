@@ -13,9 +13,11 @@
     <color name="silver">#C2C2C2</color>
     <color name="geraldine">#FF7A8A</color>
     <color name="tundora">#444444</color>
+    <color name="french">#B8B9C3</color>
 
     <color name="primary_background_screen">@color/haiti</color>
     <color name="primary_text">@color/white</color>
+    <color name="secondary_text">@color/french</color>
     <color name="background_app_bar">@color/port_gore</color>
     <color name="bottom_nav_menu_icon">@color/silver</color>
     <color name="search_hint_unfocused">@color/tundora</color>

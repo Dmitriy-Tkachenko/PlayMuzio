@@ -10,11 +10,13 @@
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable-v24/ic_profile_24.xml" value="0.1" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable-v24/ic_radio.xml" value="0.1965" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable-v24/selector_search_view.xml" value="0.243" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable/foreground_action_down.xml" value="0.197" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/font/fonts.xml" value="0.1" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/featured_playlist_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/new_releases_item.xml" value="0.75" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

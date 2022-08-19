@@ -2,6 +2,7 @@ package com.tk4dmitriy.playmuzio.data.api
 
 import com.tk4dmitriy.playmuzio.data.model.endpoints.currentUsersProfile.CurrentUsersProfile
 import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.FeaturedPlaylists
+import com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases.NewReleases
 import com.tk4dmitriy.playmuzio.utils.Constants
 import retrofit2.Response
 import retrofit2.http.*
@@ -12,4 +13,7 @@ interface ApiService {
 
     @GET(Constants.FEATURED_PLAYLISTS)
     suspend fun fetchFeaturedPlaylists(@Query("country") country: String): Response<FeaturedPlaylists>
+
+    @GET(Constants.NEW_RELEASES)
+    suspend fun fetchNewReleases(@Query("country") country: String): Response<NewReleases>
 }

@@ -1,4 +1,4 @@
-package com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists
+package com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases
 
 data class Image(
     val width: Int?,
