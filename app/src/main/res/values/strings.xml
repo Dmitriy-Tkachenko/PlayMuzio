@@ -2,4 +2,8 @@
     <string name="app_name">PlayMuzio</string>
     <string name="error_authorization">Authorization Error</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="floating_btn_home">Home</string>
+    <string name="search">Search</string>
+    <string name="featured_playlists">Featured Playlists</string>
+    <string name="error">Error</string>
 </resources>

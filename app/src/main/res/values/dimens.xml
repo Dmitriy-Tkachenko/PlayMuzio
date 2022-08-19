@@ -4,4 +4,6 @@
     <dimen name="iv_no_internet_connection_width">60dp</dimen>
     <dimen name="iv_no_internet_connection_height">60dp</dimen>
     <dimen name="tv_no_internet_connection_size">16sp</dimen>
+    <dimen name="main_margin_horizontal">16dp</dimen>
+    <dimen name="main_margin_vertical">14dp</dimen>
 </resources>

@@ -71,8 +71,8 @@ class LoginActivity: AppCompatActivity() {
             val response: AuthorizationResponse = AuthorizationClient.getResponse(resultCode, data)
             val typeResponse = response.type
 
-            typeResponse?.let {
-                when(typeResponse) {
+            typeResponse?.run {
+                when (this) {
                     AuthorizationResponse.Type.TOKEN -> processingToken(response.accessToken)
                     AuthorizationResponse.Type.ERROR -> processingError(response.error)
                     AuthorizationResponse.Type.CODE -> processingCode(response.code)

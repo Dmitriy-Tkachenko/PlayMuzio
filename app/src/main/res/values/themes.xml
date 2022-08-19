@@ -6,11 +6,15 @@
         <item name="colorPrimaryVariant">@color/haiti</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/geraldine</item>
         <item name="colorSecondaryVariant">@color/haiti</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize12dp" parent="">
+        <item name="cornerSize">12dp</item>
     </style>
 </resources>
