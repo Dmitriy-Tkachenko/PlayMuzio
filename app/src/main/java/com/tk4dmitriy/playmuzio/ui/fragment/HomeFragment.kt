@@ -1,18 +1,29 @@
 package com.tk4dmitriy.playmuzio.ui.fragment
 
+import android.animation.ObjectAnimator
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.imageview.ShapeableImageView
 import com.tk4dmitriy.playmuzio.R
 import com.tk4dmitriy.playmuzio.data.api.ApiHelper
 import com.tk4dmitriy.playmuzio.data.api.RetrofitBuilder
+import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.Item
+import com.tk4dmitriy.playmuzio.ui.adapter.Callback
 import com.tk4dmitriy.playmuzio.ui.adapter.HomeFeaturedPlaylistsAdapter
 import com.tk4dmitriy.playmuzio.ui.adapter.NewReleasesAdapter
 import com.tk4dmitriy.playmuzio.ui.viewmodel.HomeViewModel
@@ -20,6 +31,7 @@ import com.tk4dmitriy.playmuzio.ui.viewmodel.ViewModelFactory
 import com.tk4dmitriy.playmuzio.utils.Constants
 import com.tk4dmitriy.playmuzio.utils.TAG
 import com.tkachenko.playmusic.utils.Status
+
 
 class HomeFragment: Fragment() {
     private lateinit var llFeaturedPlaylists: LinearLayout
@@ -30,6 +42,8 @@ class HomeFragment: Fragment() {
     private lateinit var rvNewReleases: RecyclerView
     private lateinit var featuredPlaylistsAdapter: HomeFeaturedPlaylistsAdapter
     private lateinit var newReleasesAdapter: NewReleasesAdapter
+
+    private var etSearchHasFocused: Boolean = false
 
     private val homeViewModel: HomeViewModel by lazy {
         ViewModelProvider(owner = this,
@@ -43,15 +57,19 @@ class HomeFragment: Fragment() {
         newReleasesAdapter = NewReleasesAdapter()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         setupUI(view = view)
+        callbackProcessing()
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupUI(view: View) {
         llFeaturedPlaylists = view.findViewById(R.id.ll_featured_playlists)
         etSearch = view.findViewById(R.id.et_search)
+
         tvNewReleases = view.findViewById(R.id.tv_new_releases)
         tvFeaturedPlaylists = view.findViewById(R.id.tv_featured_playlists)
         rvFeaturedPlaylists = view.findViewById(R.id.rv_featured_playlists)
@@ -66,6 +84,34 @@ class HomeFragment: Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = newReleasesAdapter
         }
+    }
+
+    private fun callbackProcessing() {
+        featuredPlaylistsAdapter.attachCallback(object: Callback {
+            override fun touchOnView(item: Item, view: View, action: Int) {
+                when (action) {
+                    MotionEvent.ACTION_DOWN -> foregroundViewActionDown(view = view)
+                    MotionEvent.ACTION_UP -> animateViewActionUp(view = view)
+                    MotionEvent.ACTION_CANCEL -> animateViewActionCancel(view = view)
+                }
+            }
+        })
+    }
+
+    private fun foregroundViewActionDown(view: View) {
+        view.foreground = AppCompatResources.getDrawable(view.context, R.drawable.foreground_action_down)
+    }
+
+    private fun animateViewActionUp(view: View) {
+        val animator: ObjectAnimator = ObjectAnimator.ofInt(view.foreground, "alpha", 255, 0)
+        animator.duration = 300
+        animator.start()
+    }
+
+    private fun animateViewActionCancel(view: View) {
+        val animator: ObjectAnimator = ObjectAnimator.ofInt(view.foreground, "alpha", 255, 0)
+        animator.duration = 300
+        animator.start()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

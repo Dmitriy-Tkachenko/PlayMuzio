@@ -13,9 +13,18 @@ import com.squareup.picasso.Picasso
 import com.tk4dmitriy.playmuzio.R
 import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.Item
 
+interface Callback {
+    fun touchOnView(item: Item, view: View, action: Int)
+}
+
 class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAdapter.ViewHolder>() {
     private val featuredPlaylists: MutableList<Item> = mutableListOf()
-    var onItemClick: ((Item) -> Unit)? = null
+   // var onItemClick: ((Item) -> Unit)? = null
+    private lateinit var callback: Callback
+
+    fun attachCallback(callback: Callback) {
+        this.callback = callback
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(featuredPlaylists: List<Item>) {
@@ -42,7 +51,7 @@ class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAd
 
         init {
             view.setOnClickListener {  }
-            view.setOnTouchListener { v, event ->
+            /*view.setOnTouchListener { v, event ->
                 when (event?.action) {
                     MotionEvent.ACTION_DOWN -> {
                         view.foreground = AppCompatResources.getDrawable(view.context, R.drawable.foreground_action_down)
@@ -60,6 +69,11 @@ class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAd
                     }
                 }
 
+                v?.onTouchEvent(event) ?: true
+            }*/
+
+            view.setOnTouchListener { v, event ->
+                callback.touchOnView(featuredPlaylists[adapterPosition], view, event.action)
                 v?.onTouchEvent(event) ?: true
             }
         }
