@@ -16,7 +16,9 @@
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/featured_playlist_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/new_release_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/new_releases_item.xml" value="0.75" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/track_recommendation_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

@@ -1,25 +1,21 @@
 package com.tk4dmitriy.playmuzio.ui.adapter
 
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.squareup.picasso.Picasso
 import com.tk4dmitriy.playmuzio.R
 import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.Item
 
-interface Callback {
-    fun touchOnView(item: Item, view: View, action: Int)
-}
-
 class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAdapter.ViewHolder>() {
+    interface Callback {
+        fun touchOnView(item: Item, view: View, action: Int)
+    }
+
     private val featuredPlaylists: MutableList<Item> = mutableListOf()
-   // var onItemClick: ((Item) -> Unit)? = null
     private lateinit var callback: Callback
 
     fun attachCallback(callback: Callback) {
@@ -44,34 +40,12 @@ class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAd
 
     override fun getItemCount() = featuredPlaylists.size
 
-
     @SuppressLint("ClickableViewAccessibility")
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val playlistsImage: ShapeableImageView = view.findViewById(R.id.siv_playlist)
 
         init {
             view.setOnClickListener {  }
-            /*view.setOnTouchListener { v, event ->
-                when (event?.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        view.foreground = AppCompatResources.getDrawable(view.context, R.drawable.foreground_action_down)
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        val animator: ObjectAnimator = ObjectAnimator.ofInt(view.foreground, "alpha", 255, 0)
-                        animator.duration = 300
-                        animator.start()
-                        onItemClick?.invoke(featuredPlaylists[adapterPosition])
-                    }
-                    MotionEvent.ACTION_CANCEL -> {
-                        val animator: ObjectAnimator = ObjectAnimator.ofInt(view.foreground, "alpha", 255, 0)
-                        animator.duration = 300
-                        animator.start()
-                    }
-                }
-
-                v?.onTouchEvent(event) ?: true
-            }*/
-
             view.setOnTouchListener { v, event ->
                 callback.touchOnView(featuredPlaylists[adapterPosition], view, event.action)
                 v?.onTouchEvent(event) ?: true

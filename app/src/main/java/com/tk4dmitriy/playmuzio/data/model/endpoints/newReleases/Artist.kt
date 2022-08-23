@@ -1,5 +1,5 @@
 package com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases
 
-data class Artists(
+data class Artist(
     val name: String?
 )

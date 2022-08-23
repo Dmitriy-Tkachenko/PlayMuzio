@@ -4,7 +4,8 @@
         android:title=""
         android:icon="@drawable/ic_radio" />
     <item android:id="@+id/mHome"
-        android:title="" />
+        android:title=""
+        android:enabled="false"/>
     <item android:id="@+id/mProfile"
         android:title=""
         android:icon="@drawable/ic_profile" />

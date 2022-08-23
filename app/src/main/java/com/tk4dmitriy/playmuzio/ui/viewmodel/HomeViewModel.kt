@@ -1,33 +1,55 @@
 package com.tk4dmitriy.playmuzio.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.tk4dmitriy.playmuzio.data.model.endpoints.currentUsersProfile.CurrentUsersProfile
+import androidx.lifecycle.*
 import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.FeaturedPlaylists
 import com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases.NewReleases
+import com.tk4dmitriy.playmuzio.data.model.endpoints.trackRecommendations.TrackRecommendations
 import com.tk4dmitriy.playmuzio.data.repository.MainRepository
+import com.tk4dmitriy.playmuzio.utils.Constants
 import com.tk4dmitriy.playmuzio.utils.Resource
 import retrofit2.Response
 
 class HomeViewModel(private val mainRepository: MainRepository): ViewModel() {
-    private lateinit var currentUsersProfileResp: Response<CurrentUsersProfile>
     private lateinit var featuredPlaylistsResp: Response<FeaturedPlaylists>
     private lateinit var newReleasesResp: Response<NewReleases>
+    private lateinit var trackRecommendations: Response<TrackRecommendations>
 
-    fun fetchCurrentUsersProfile() = liveData {
-        if (!::currentUsersProfileResp.isInitialized) {
-            emit(Resource.Loading())
-            try {
-                val data = mainRepository.fetchCurrentUsersProfile()
-                currentUsersProfileResp = data
-                emit(Resource.Success(data = data))
-            } catch (exception: Exception) {
-                emit(Resource.Error(message = exception.message ?: "Error Occurred!"))
-            }
-        } else emit(Resource.Success(data = currentUsersProfileResp))
+    fun fetchFeaturedPlaylists() = Transformations.switchMap(liveCurrentUsersProfile()) {
+        val country = it.body()?.country
+        country?.run {
+            liveFeaturedPlaylists(this)
+        } ?: liveFeaturedPlaylists("US")
     }
 
-    fun fetchFeaturedPlaylists(country: String) = liveData {
+    fun fetchNewReleases() = Transformations.switchMap(liveCurrentUsersProfile()) {
+        val country = it.body()?.country
+        country?.run {
+            liveNewReleases(this)
+        } ?: liveNewReleases("US")
+    }
+
+    fun fetchRecommendations() = Transformations.switchMap(liveUserTopTracks()) {
+        val topTracks = it.body()?.items
+        topTracks?.run {
+            var seedTracks = ""
+            topTracks.forEach { topTrack ->
+                seedTracks += "${topTrack.id},"
+            }
+            liveRecommendations(seedTracks = seedTracks)
+        }
+    }
+
+
+    private fun liveCurrentUsersProfile() = liveData {
+        emit(mainRepository.fetchCurrentUsersProfile())
+    }
+
+    private fun liveUserTopTracks() = liveData {
+        emit(mainRepository.fetchUserTopTracks(limit = 5))
+    }
+
+
+    private fun liveFeaturedPlaylists(country: String) = liveData {
         if (!::featuredPlaylistsResp.isInitialized) {
             emit(Resource.Loading())
             try {
@@ -40,7 +62,7 @@ class HomeViewModel(private val mainRepository: MainRepository): ViewModel() {
         } else emit(Resource.Success(data = featuredPlaylistsResp))
     }
 
-    fun fetchNewReleases(country: String) = liveData {
+    private fun liveNewReleases(country: String) = liveData {
         if (!::newReleasesResp.isInitialized) {
             emit(Resource.Loading())
             try {
@@ -51,5 +73,18 @@ class HomeViewModel(private val mainRepository: MainRepository): ViewModel() {
                 emit(Resource.Error(message = exception.message ?: "Error Occurred!"))
             }
         } else emit(Resource.Success(data = newReleasesResp))
+    }
+
+    private fun liveRecommendations(seedTracks: String) = liveData {
+        if (!::trackRecommendations.isInitialized) {
+            emit(Resource.Loading())
+            try {
+                val data = mainRepository.fetchTrackRecommendations(seedTracks = seedTracks, timeRange = Constants.TIME_RANGE_MEDIUM_TERM)
+                trackRecommendations = data
+                emit(Resource.Success(data = data))
+            } catch (exception: Exception) {
+                emit(Resource.Error(message = exception.message ?: "Error Occurred!"))
+            }
+        } else emit(Resource.Success(data = trackRecommendations))
     }
 }

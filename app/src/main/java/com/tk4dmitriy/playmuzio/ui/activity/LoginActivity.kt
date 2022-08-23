@@ -56,7 +56,7 @@ class LoginActivity: AppCompatActivity() {
     private fun authorization() {
         val builder: AuthorizationRequest.Builder = AuthorizationRequest.Builder(CLIENT_ID,
             AuthorizationResponse.Type.TOKEN, REDIRECT_URI)
-        val scopes: Array<String> = arrayOf("streaming", "user-read-private", "user-top-read", "user-read-playback-state")
+        val scopes: Array<String> = arrayOf("streaming", "user-read-private", "user-top-read", "user-read-playback-state", "user-follow-read", "user-library-read")
         builder.setScopes(scopes)
         val request: AuthorizationRequest = builder.build()
 
