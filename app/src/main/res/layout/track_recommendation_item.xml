@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="180dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginEnd="16dp"
+    android:orientation="vertical"
+    android:background="@color/haiti">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/album_image"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@color/port_gore"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/album_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:text="Urgent Siege"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"/>
+
+        <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/open_sans_regular"
+            tools:text="Damned Anthem"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"/>
+
+    </LinearLayout>
+
+</LinearLayout>
