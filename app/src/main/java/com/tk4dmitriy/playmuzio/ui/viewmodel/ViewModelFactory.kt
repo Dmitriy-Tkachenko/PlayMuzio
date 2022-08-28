@@ -13,6 +13,8 @@ class ViewModelFactory(apiHelper: ApiHelper): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(mainRepository = mainRepository) as T
+        } else if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
+            return AlbumViewModel(mainRepository = mainRepository) as T
         } else {
             throw IllegalArgumentException("Unknown class name")
         }

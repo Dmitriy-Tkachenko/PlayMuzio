@@ -47,7 +47,7 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val sivAlbumImage: ShapeableImageView = view.findViewById(R.id.album_image)
         private val tvAlbumName: TextView = view.findViewById(R.id.album_name)
-        private val tvArtistName: TextView = view.findViewById(R.id.artist_name)
+        private val tvArtistName: TextView = view.findViewById(R.id.tv_artist_name)
 
         init {
             view.setOnClickListener {  }
@@ -58,37 +58,23 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
         }
 
         fun bind(model: Track) {
-            if (model.album?.images != null) {
-                for (image in model.album.images) {
-                    if (image.height == 300) {
+            model.album?.run {
+                for (image in images) {
+                    if (image.height == 300 || image.height == 0) {
                         Picasso.get().load(image.url).into(sivAlbumImage)
                     }
                 }
             }
+
             tvAlbumName.apply {
                 text = model.name
                 isSelected = true
             }
 
             tvArtistName.apply {
-                text = getArtists(model.artists)
+                text = model.artistsNames
                 isSelected = true
             }
-        }
-
-        private fun getArtists(artists: List<Artist>?): String {
-            var result = ""
-
-            if (artists != null) {
-                for (index in artists.indices) {
-                    if (artists.size > 1 && index != artists.size - 1) {
-                        result += "${artists[index].name}, "
-                    }
-                }
-                result += artists[artists.size - 1].name
-            }
-
-            return result
         }
     }
 }

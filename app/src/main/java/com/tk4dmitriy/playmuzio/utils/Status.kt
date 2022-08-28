@@ -1,4 +1,4 @@
-package com.tkachenko.playmusic.utils
+package com.tk4dmitriy.playmuzio.utils
 
 enum class Status {
     SUCCESS,

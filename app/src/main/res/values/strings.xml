@@ -5,7 +5,10 @@
     <string name="floating_btn_home">Home</string>
     <string name="search">Search</string>
     <string name="featured_playlists">Featured Playlists</string>
-    <string name="error">Error</string>
+    <string name="error">Connection error. Check your internet connection.</string>
     <string name="new_releases">New Releases</string>
     <string name="may_like">May Like</string>
+    <string name="categories">Categories</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_more">Button More</string>
 </resources>

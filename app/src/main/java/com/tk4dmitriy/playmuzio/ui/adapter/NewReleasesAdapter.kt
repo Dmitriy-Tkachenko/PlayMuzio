@@ -57,12 +57,8 @@ class NewReleasesAdapter: RecyclerView.Adapter<NewReleasesAdapter.ViewHolder>() 
         }
 
         fun bind(model: Item) {
-            if (model.images != null) {
-                for (image in model.images) {
-                    if ((image.height == 300 || image.height == null) && image.url != null && image.url.isNotEmpty()) {
-                        Picasso.get().load(image.url).into(sivAlbumImage)
-                    }
-                }
+            for (image in model.images) {
+                if (image.height == 300 || image.height == 0) Picasso.get().load(image.url).into(sivAlbumImage)
             }
 
             tvAlbumName.apply {
@@ -71,24 +67,9 @@ class NewReleasesAdapter: RecyclerView.Adapter<NewReleasesAdapter.ViewHolder>() 
             }
 
             tvArtistName.apply {
-                text = getArtists(model.artists)
+                text = model.artistsNames
                 isSelected = true
             }
-        }
-
-        private fun getArtists(artists: List<Artist>?): String {
-            var result = ""
-
-            if (artists != null) {
-                for (index in artists.indices) {
-                    if (artists.size > 1 && index != artists.size - 1) {
-                        result += "${artists[index].name}, "
-                    }
-                }
-                result += artists[artists.size - 1].name
-            }
-
-            return result
         }
     }
 }

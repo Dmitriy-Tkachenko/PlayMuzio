@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="25dp"
+    android:paddingEnd="0dp"
+    android:paddingTop="@dimen/main_padding_vertical"
+    android:paddingBottom="@dimen/main_padding_vertical">
+
+    <TextView
+        android:id="@+id/song_number"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/rounded_corner_number_song"
+        tools:text="1"
+        android:textColor="@color/white"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"/>
+
+    <LinearLayout
+        android:id="@+id/ll_track"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="25dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/song_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Imagine Dragons"
+            tools:textColor="@color/black"
+            android:textSize="16sp"
+            android:textColor="@color/primary_text"
+            android:fontFamily="@font/open_sans_bold"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"/>
+
+        <TextView
+            android:id="@+id/song_artis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Cameron Williamson"
+            tools:textColor="@color/black"
+            android:textSize="14sp"
+            android:textColor="@color/primary_text"
+            android:fontFamily="@font/open_sans_regular"
+            android:singleLine="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"/>
+
+        <TextView
+            android:id="@+id/song_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="2:30"
+            android:textSize="12sp"
+            android:textColor="@color/secondary_text"
+            android:fontFamily="@font/open_sans_regular"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_more"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_baseline_more_horiz"
+        android:contentDescription="@string/btn_more" />
+
+</LinearLayout>

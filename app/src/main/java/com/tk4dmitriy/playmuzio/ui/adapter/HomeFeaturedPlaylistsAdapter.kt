@@ -53,12 +53,8 @@ class HomeFeaturedPlaylistsAdapter: RecyclerView.Adapter<HomeFeaturedPlaylistsAd
         }
 
         fun bind(model: Item) {
-            if (model.images != null) {
-                for (image in model.images) {
-                    if ((image.height == 300 || image.height == null) && image.url != null && image.url.isNotEmpty()) {
-                        Picasso.get().load(image.url).into(playlistsImage)
-                    }
-                }
+            for (image in model.images) {
+                if (image.height == 300 || image.height == 0) Picasso.get().load(image.url).into(playlistsImage)
             }
         }
     }

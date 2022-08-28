@@ -53,6 +53,8 @@ dependencies {
 
     // Picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+    implementation 'jp.co.cyberagent.android:gpuimage:2.1.0'
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
