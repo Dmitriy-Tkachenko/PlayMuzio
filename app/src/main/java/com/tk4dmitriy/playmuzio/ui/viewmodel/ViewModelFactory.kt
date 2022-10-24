@@ -15,6 +15,10 @@ class ViewModelFactory(apiHelper: ApiHelper): ViewModelProvider.Factory {
             return HomeViewModel(mainRepository = mainRepository) as T
         } else if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
             return AlbumViewModel(mainRepository = mainRepository) as T
+        } else if (modelClass.isAssignableFrom(TrackViewModel::class.java)) {
+            return TrackViewModel(mainRepository = mainRepository) as T
+        } else if (modelClass.isAssignableFrom(PlaylistViewModel::class.java)) {
+            return PlaylistViewModel(mainRepository = mainRepository) as T
         } else {
             throw IllegalArgumentException("Unknown class name")
         }

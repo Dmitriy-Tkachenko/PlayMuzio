@@ -37,7 +37,7 @@ class ConnectionLiveData(context: Context) : LiveData<Boolean>() {
             Log.d(TAG, "onAvailable")
             CoroutineScope(Dispatchers.IO).launch {
                 val hasInternet = DoesNetworkHaveInternet.execute()
-                if(hasInternet) {
+                if (hasInternet) {
                     withContext(Dispatchers.Main){
                         Log.d(TAG, "onAvailable: adding network. $network")
                         validNetworks.add(network)

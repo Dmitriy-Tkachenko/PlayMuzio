@@ -1,5 +1,9 @@
 package com.tk4dmitriy.playmuzio.data.model.endpoints.currentUsersProfile
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class CurrentUsersProfile(
-    val country: String = "US"
+    @Json(name = "country") val country: String = "US"
 )

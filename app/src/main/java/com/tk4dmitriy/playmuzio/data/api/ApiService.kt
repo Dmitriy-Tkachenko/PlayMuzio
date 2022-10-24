@@ -1,10 +1,13 @@
 package com.tk4dmitriy.playmuzio.data.api
 
 import com.tk4dmitriy.playmuzio.data.model.endpoints.album.Album
-import com.tk4dmitriy.playmuzio.data.model.endpoints.browseCategories.BrowseCategories
 import com.tk4dmitriy.playmuzio.data.model.endpoints.currentUsersProfile.CurrentUsersProfile
 import com.tk4dmitriy.playmuzio.data.model.endpoints.featuredPlaylists.FeaturedPlaylists
+import com.tk4dmitriy.playmuzio.data.model.endpoints.matcherLyrics.MatcherLyrics
 import com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases.NewReleases
+import com.tk4dmitriy.playmuzio.data.model.endpoints.playlist.Playlist
+import com.tk4dmitriy.playmuzio.data.model.endpoints.trackFromAlbum.TrackFromAlbum
+import com.tk4dmitriy.playmuzio.data.model.endpoints.trackRecommendations.Track
 import com.tk4dmitriy.playmuzio.data.model.endpoints.trackRecommendations.TrackRecommendations
 import com.tk4dmitriy.playmuzio.data.model.endpoints.userTopTracks.TopTracks
 import com.tk4dmitriy.playmuzio.utils.Constants
@@ -30,9 +33,16 @@ interface ApiService {
     @GET(Constants.TRACK_RECOMMENDATIONS)
     suspend fun fetchTrackRecommendationsByGenres(@Query("seed_genres") seedGenres: String): Response<TrackRecommendations>
 
-    @GET(Constants.BROWSE_CATEGORIES)
-    suspend fun fetchBrowseCategories(@Query("country") country: String): Response<BrowseCategories>
-
     @GET
     suspend fun fetchAlbum(@Url url: String): Response<Album>
+
+    @GET
+    suspend fun fetchPlaylist(@Url url: String, @Query("fields") fields: String =
+        "description,images(height,url,width),name,tracks(total,items(track(album(images(height,url,width)),artists(name),name,duration_ms,href,preview_url)))"): Response<Playlist>
+
+    @GET
+    suspend fun fetchTrackFromAlbum(@Url url: String): Response<TrackFromAlbum>
+
+    @GET
+    suspend fun fetchTrackLyrics(@Url url: String, @Query("apikey") apiKey: String, @Query("q_track") track: String, @Query("q_artist") artist: String): Response<MatcherLyrics>
 }

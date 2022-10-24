@@ -12,6 +12,7 @@ import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import com.tk4dmitriy.playmuzio.R
+import com.tk4dmitriy.playmuzio.data.api.RetrofitBuilder
 import com.tk4dmitriy.playmuzio.utils.ConnectionLiveData
 import com.tk4dmitriy.playmuzio.utils.Constants
 import com.tk4dmitriy.playmuzio.utils.TAG
@@ -32,9 +33,10 @@ class LoginActivity: AppCompatActivity() {
         ivNoInternetConnection = findViewById(R.id.iv_no_internet_connection)
         tvNoInternetConnection = findViewById(R.id.tv_no_internet_connection)
 
-        connectionLiveData = ConnectionLiveData(application)
+        connectionLiveData = ConnectionLiveData(applicationContext)
         connectionLiveData.observe(this) { networkAvailable ->
             if (networkAvailable) {
+                RetrofitBuilder.initialize(context = applicationContext)
                 noVisibleInternetConnection()
                 authorization()
             } else {

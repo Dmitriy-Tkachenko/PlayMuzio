@@ -10,11 +10,8 @@ object Constants {
     const val USER_TOP_TRACKS = "v1/me/top/tracks"
     const val TRACK_RECOMMENDATIONS = "v1/recommendations"
     const val FOLLOWED_ARTISTS = "v1/me/following?type=artist"
-    const val BROWSE_CATEGORIES = "v1/browse/categories"
 
-    // For request USER_TOP_TRACKS or USER_TOP_ARTISTS
-    const val TIME_RANGE_LONG_TERM = "long_term" // data for several a years
-    const val TIME_RANGE_MEDIUM_TERM = "medium_term" // data for half a years
-    const val TIME_RANGE_SHORT_TERM = "short_term" // data for last a month\
-    const val LIMIT = 5
+    const val API_URL_MUSIX_MATCH = "https://api.musixmatch.com/ws/1.1/"
+    const val API_KEY = "721e510c81e641205bdbb7a99a656063"
+    const val TRACK_LYRICS = "matcher.lyrics.get"
 }

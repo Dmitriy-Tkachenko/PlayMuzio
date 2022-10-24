@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="25dp"
+    android:paddingStart="16dp"
     android:paddingEnd="0dp"
-    android:paddingTop="@dimen/main_padding_vertical"
-    android:paddingBottom="@dimen/main_padding_vertical">
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/song_number"
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="16dp"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
@@ -33,7 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Imagine Dragons"
-            tools:textColor="@color/black"
             android:textSize="16sp"
             android:textColor="@color/primary_text"
             android:fontFamily="@font/open_sans_bold"
@@ -49,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Cameron Williamson"
-            tools:textColor="@color/black"
             android:textSize="14sp"
             android:textColor="@color/primary_text"
             android:fontFamily="@font/open_sans_regular"
@@ -73,15 +71,15 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/btn_more"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:paddingStart="25dp"
-        android:paddingEnd="25dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:id="@+id/btn_add"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_baseline_more_horiz"
+        android:src="@drawable/ic_plus"
         android:contentDescription="@string/btn_more" />
 
 </LinearLayout>

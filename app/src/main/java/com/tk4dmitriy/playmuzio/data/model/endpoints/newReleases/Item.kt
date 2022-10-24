@@ -1,9 +1,16 @@
 package com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import com.tk4dmitriy.playmuzio.utils.NullToEmptyString
+
+@JsonClass(generateAdapter = true)
 data class Item(
-    val name: String = "",
-    val href: String = "",
-    val artists: List<Artist> = emptyList(),
-    val images: List<Image> = emptyList(),
-    var artistsNames: String = ""
+    @Json(name = "artists") val artists: List<Artist>? = null,
+    @Json(name = "href") @NullToEmptyString val href: String = "",
+    @Json(name = "images") val images: List<Image>? = null,
+    @Json(name = "name") @NullToEmptyString val name: String = "",
+
+    var artistsNames: String = "",
+    var imageUrl: String = ""
 )

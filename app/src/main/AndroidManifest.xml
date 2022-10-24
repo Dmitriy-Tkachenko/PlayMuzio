@@ -4,6 +4,7 @@
     package="com.tk4dmitriy.playmuzio">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,10 @@
 
         <activity android:name=".ui.activity.HomeActivity" />
         <activity android:name=".ui.activity.AlbumActivity" android:theme="@style/Theme.PlayMuzio.NoActionBar" />
+        <activity android:name=".ui.activity.PlaylistActivity" android:theme="@style/Theme.PlayMuzio.NoActionBar" />
+        <activity android:name=".ui.activity.TrackPlayActivity" android:theme="@style/Theme.PlayMuzio.NoActionBar" android:launchMode="singleTop"/>
 
+        <service android:name=".data.service.ExoPlayerService" />
     </application>
 
 </manifest>

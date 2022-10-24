@@ -13,7 +13,11 @@ class ApiHelper(private val apiService: ApiService) {
 
     suspend fun fetchTrackRecommendationsByGenres(seedGenres: String) = apiService.fetchTrackRecommendationsByGenres(seedGenres = seedGenres)
 
-    suspend fun fetchBrowseCategories(country: String) = apiService.fetchBrowseCategories(country = country)
-
     suspend fun fetchAlbum(url: String) = apiService.fetchAlbum(url = url)
+
+    suspend fun fetchPlaylist(url: String) = apiService.fetchPlaylist(url = url)
+
+    suspend fun fetchTrackFromAlbum(url: String) = apiService.fetchTrackFromAlbum(url = url)
+
+    suspend fun fetchTrackLyrics(url: String, apiKey: String, track: String, artist: String) = apiService.fetchTrackLyrics(url = url, apiKey = apiKey, track = track, artist = artist)
 }

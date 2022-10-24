@@ -1,23 +1,30 @@
 package com.tk4dmitriy.playmuzio.ui.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
-import com.squareup.picasso.Picasso
 import com.tk4dmitriy.playmuzio.R
-import com.tk4dmitriy.playmuzio.data.model.endpoints.trackRecommendations.Artist
 import com.tk4dmitriy.playmuzio.data.model.endpoints.trackRecommendations.Track
+import com.tk4dmitriy.playmuzio.utils.TAG
+
+private const val SET_COLOR_ITEM_VIEW = "SET_COLOR_ITEM_VIEW"
+private const val REMOVE_COLOR_ITEM_VIEW = "REMOVE_COLOR_ITEM_VIEW"
 
 class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendationsAdapter.ViewHolder>() {
     interface Callback {
-        fun touchOnView(track: Track, view: View, action: Int)
+        fun touchUp(position: Int)
     }
 
     private val trackRecommendations: MutableList<Track> = mutableListOf()
+    private var selectedTrack = -1
     private lateinit var callback: Callback
 
     fun attachCallback(callback: Callback) {
@@ -30,6 +37,22 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
         notifyDataSetChanged()
     }
 
+    fun selectNewTrack(position: Int) {
+        selectedTrack = position
+        notifyItemChanged(selectedTrack, SET_COLOR_ITEM_VIEW)
+    }
+
+    fun deselectOldTrack() {
+        if (selectedTrack != -1) {
+            notifyItemChanged(selectedTrack, REMOVE_COLOR_ITEM_VIEW)
+            selectedTrack = -1
+        }
+    }
+
+    fun deselectTrack(position: Int) {
+        notifyItemChanged(position, REMOVE_COLOR_ITEM_VIEW)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_recommendation_item, parent,false)
         return ViewHolder(view = view)
@@ -38,10 +61,24 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recommendedTracks = trackRecommendations[position]
         holder.bind(recommendedTracks)
+        if (position == selectedTrack) {
+            holder.setColorItemView()
+        } else {
+            holder.removeColorItemView()
+        }
+    }
+
+    override fun onBindViewHolder(holder: HomeTrackRecommendationsAdapter.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) super.onBindViewHolder(holder, position, payloads)
+        else {
+            for (payload in payloads) {
+                if (payload == SET_COLOR_ITEM_VIEW) holder.setColorItemView()
+                else if (payload == REMOVE_COLOR_ITEM_VIEW) holder.removeColorItemView()
+            }
+        }
     }
 
     override fun getItemCount() = trackRecommendations.size
-
 
     @SuppressLint("ClickableViewAccessibility")
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -52,19 +89,23 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
         init {
             view.setOnClickListener {  }
             view.setOnTouchListener { v, event ->
-                callback.touchOnView(trackRecommendations[adapterPosition], view, event.action)
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        notifyItemChanged(bindingAdapterPosition, SET_COLOR_ITEM_VIEW)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        callback.touchUp(bindingAdapterPosition)
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        if (bindingAdapterPosition != selectedTrack) notifyItemChanged(bindingAdapterPosition, REMOVE_COLOR_ITEM_VIEW)
+                    }
+                }
                 v?.onTouchEvent(event) ?: true
             }
         }
 
         fun bind(model: Track) {
-            model.album?.run {
-                for (image in images) {
-                    if (image.height == 300 || image.height == 0) {
-                        Picasso.get().load(image.url).into(sivAlbumImage)
-                    }
-                }
-            }
+            Glide.with(itemView).load(model.album?.imageUrl).into(sivAlbumImage)
 
             tvAlbumName.apply {
                 text = model.name
@@ -75,6 +116,14 @@ class HomeTrackRecommendationsAdapter: RecyclerView.Adapter<HomeTrackRecommendat
                 text = model.artistsNames
                 isSelected = true
             }
+        }
+
+        fun setColorItemView() {
+            itemView.foreground = AppCompatResources.getDrawable(itemView.context, R.drawable.foreground_rounded_action_down)
+        }
+
+        fun removeColorItemView() {
+            itemView.foreground = null
         }
     }
 }

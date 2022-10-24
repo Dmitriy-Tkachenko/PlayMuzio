@@ -11,6 +11,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -61,77 +62,76 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginHorizontal="@dimen/main_margin_horizontal"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/main_margin_horizontal"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_artist_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_artist_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="by Imagine Dragons"
-                        android:maxLines="3"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:textSize="14sp"
-                        android:textColor="@color/primary_text"
-                        android:layout_gravity="bottom"/>
-
-                    <TextView
-                        android:id="@+id/tv_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        tools:text="2016 | 12 songs | 46 min"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:textSize="14sp"
-                        android:textColor="@color/secondary_text"
-                        android:layout_gravity="bottom"/>
-
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/btn_rounded_corner"
+                    tools:text="by Imagine Dragons"
+                    android:maxLines="3"
                     android:fontFamily="@font/open_sans_bold"
-                    android:text="@string/btn_add"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false" />
+                    android:textSize="14sp"
+                    android:textColor="@color/primary_text"
+                    android:layout_gravity="bottom"/>
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="2016 | 12 songs | 46 min"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_gravity="bottom"/>
+
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_album_tracks"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="@dimen/main_margin_vertical"
-                android:orientation="vertical"
-                android:nestedScrollingEnabled="false"/>
-
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/btn_rounded_corner"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/btn_add"
+                android:textColor="@color/white"
+                android:textAllCaps="false" />
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_album_tracks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/main_margin_vertical"
+            android:orientation="vertical"
+            android:overScrollMode="never"/>
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

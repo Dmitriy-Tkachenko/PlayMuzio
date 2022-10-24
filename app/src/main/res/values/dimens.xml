@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- activity_login -->
     <dimen name="iv_no_internet_connection_width">60dp</dimen>
     <dimen name="iv_no_internet_connection_height">60dp</dimen>
     <dimen name="tv_no_internet_connection_size">16sp</dimen>
@@ -8,4 +7,11 @@
     <dimen name="main_margin_vertical">14dp</dimen>
     <dimen name="main_padding_horizontal">16dp</dimen>
     <dimen name="main_padding_vertical">14dp</dimen>
+    <dimen name="expand_track_image_size">250dp</dimen>
+    <dimen name="collapsed_image_size">36dp</dimen>
+    <dimen name="collapsed_track_image_margin">8dp</dimen>
+    <dimen name="expanded_track_name_size">22sp</dimen>
+    <dimen name="collapsed_track_name_size">14sp</dimen>
+    <dimen name="expanded_artist_name_size">18sp</dimen>
+    <dimen name="collapsed_artist_name_size">10sp</dimen>
 </resources>

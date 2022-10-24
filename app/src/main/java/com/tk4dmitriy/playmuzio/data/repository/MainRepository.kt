@@ -9,6 +9,8 @@ class MainRepository(private val apiHelper: ApiHelper) {
     suspend fun fetchUserTopTracks(limit: Int, timeRange: String) = apiHelper.fetchUserTopTracks(limit = limit, timeRange = timeRange)
     suspend fun fetchTrackRecommendationsByTracks(seedTracks: String) = apiHelper.fetchTrackRecommendationsByTracks(seedTracks = seedTracks)
     suspend fun fetchTrackRecommendationsByGenres(seedGenres: String) = apiHelper.fetchTrackRecommendationsByGenres(seedGenres = seedGenres)
-    suspend fun fetchBrowseCategories(country: String) = apiHelper.fetchBrowseCategories(country = country)
     suspend fun fetchAlbum(url: String) = apiHelper.fetchAlbum(url = url)
+    suspend fun fetchPlaylist(url: String) = apiHelper.fetchPlaylist(url = url)
+    suspend fun fetchTrackFromAlbum(url: String) = apiHelper.fetchTrackFromAlbum(url = url)
+    suspend fun fetchTrackLyrics(url: String, apiKey: String, track: String, artist: String) = apiHelper.fetchTrackLyrics(url = url, apiKey = apiKey, track = track, artist = artist)
 }

@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
-import com.squareup.picasso.Picasso
 import com.tk4dmitriy.playmuzio.R
-import com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases.Artist
 import com.tk4dmitriy.playmuzio.data.model.endpoints.newReleases.Item
 
 class NewReleasesAdapter: RecyclerView.Adapter<NewReleasesAdapter.ViewHolder>() {
@@ -51,15 +50,13 @@ class NewReleasesAdapter: RecyclerView.Adapter<NewReleasesAdapter.ViewHolder>() 
         init {
             view.setOnClickListener {  }
             view.setOnTouchListener { v, event ->
-                callback.touchOnView(item = newReleases[adapterPosition], view = view, action = event.action)
+                callback.touchOnView(item = newReleases[bindingAdapterPosition], view = view, action = event.action)
                 v?.onTouchEvent(event) ?: true
             }
         }
 
         fun bind(model: Item) {
-            for (image in model.images) {
-                if (image.height == 300 || image.height == 0) Picasso.get().load(image.url).into(sivAlbumImage)
-            }
+            Glide.with(itemView).load(model.imageUrl).into(sivAlbumImage)
 
             tvAlbumName.apply {
                 text = model.name

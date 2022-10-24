@@ -11,24 +11,31 @@ import java.util.concurrent.TimeUnit
 class AlbumViewModel(private val mainRepository: MainRepository): ViewModel() {
     private lateinit var albumResp: Response<Album>
 
-    fun fetchAlbum(url: String) = Transformations.switchMap(liveAlbum(url = url)) {
-        it.data?.body()?.run {
-            val albumArtistNames: MutableList<String> = mutableListOf()
-            artists.forEach { artist -> albumArtistNames.add(artist.name) }
-            artistNames = getArtistsNames(names = albumArtistNames)
+    fun fetchAlbum(url: String) = Transformations.switchMap(liveAlbum(url = url)) { albumResp ->
+        albumResp.data?.body()?.let { album ->
+            album.tracks?.let { tracks ->
+                tracks.trackPreviewUrls.clear()
+                tracks.trackNames.clear()
+                tracks.trackArtistNames.clear()
+                tracks.items?.forEach { item ->
+                    tracks.trackPreviewUrls.add(item.previewUrl)
+                    tracks.trackNames.add(item.name)
 
-            tracks.items.forEach { item ->
-                val trackArtistsNames: MutableList<String> = mutableListOf()
-                item.artists.forEach { artist ->
-                    trackArtistsNames.add(artist.name)
+                    val artistNames: MutableList<String> = mutableListOf()
+                    item.artists?.forEach { artist ->
+                        artistNames.add(artist.name)
+                    }
+                    item.artistsNames = getArtistsNames(names = artistNames)
+                    tracks.trackArtistNames.add(item.artistsNames)
+
+                    item.durationMs?.run {
+                        item.durationMin = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(this),
+                            TimeUnit.MILLISECONDS.toSeconds(this) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(this)))
+                    }
+                    tracks.info = getInfo(items = tracks.items, date = album.releaseDate, totalTracks = album.totalTracks ?: 0)
                 }
-                item.artistsNames = getArtistsNames(names = trackArtistsNames)
-                item.durationMin = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(item.durationMs),
-                    TimeUnit.MILLISECONDS.toSeconds(item.durationMs) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(item.durationMs)))
             }
-            tracks.info = getInfo(items = tracks.items, date = releaseDate, totalTracks = totalTracks)
-
-            MutableLiveData(it)
+            MutableLiveData(albumResp)
         }
     }
 
@@ -66,7 +73,7 @@ class AlbumViewModel(private val mainRepository: MainRepository): ViewModel() {
     private fun getMinutesAlbum(items: List<Item>): Long {
         var duration: Long = 0
 
-        items.forEach { item -> duration += item.durationMs }
+        items.forEach { item -> duration += item.durationMs ?: 0 }
 
         duration = TimeUnit.MILLISECONDS.toMinutes(duration)
 
