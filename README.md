@@ -9,7 +9,9 @@
 На следующих анимациях можно увидеть раздел Featured Playlists и пример работы:
 
 ![FeaturedPlaylists](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists.gif)
+
 ![Playlist1](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists1.gif)
+
 ![Playlist2](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists2.gif)
 
 ## Раздел New Releases
@@ -50,6 +52,7 @@
 Первый запрос (до кэширования):
 
 ![До кэширования](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/Caching1.gif)
+
 Второй запрос (после кэширования):
 
 ![После кэширования](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/Caching2.gif)
