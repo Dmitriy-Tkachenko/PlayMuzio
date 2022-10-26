@@ -4,6 +4,6 @@
     <item
         android:id="@+id/moreVertical"
         android:icon="@drawable/ic_baseline_more_vert"
-        android:title="more"
+        android:title=""
         app:showAsAction="ifRoom" />
 </menu>

@@ -24,25 +24,27 @@
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable/ic_plus.xml" value="0.2595" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/drawable/rounded_corner_number_song.xml" value="0.2125" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/font/fonts.xml" value="0.1" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout-land/activity_track_play.xml" value="0.4114583333333333" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout-lamd/activity_track_play.xml" value="0.36666666666666664" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout-land/activity_track_play.xml" value="0.5" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout-land/exo_player_control_view_land.xml" value="0.6741424802110818" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout-v26/activity_track_play.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_album.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_playlist.xml" value="0.36666666666666664" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_track_play.xml" value="0.36666666666666664" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/activity_track_play.xml" value="0.25" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/album_track_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/browse_category_item.xml" value="0.365625" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/exo_player_control_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/exo_player_control_view.xml" value="0.25" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/featured_playlist_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/new_release_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/new_releases_item.xml" value="0.75" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/playlist_track_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/layout/track_recommendation_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
         <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/menu_album.xml" value="0.36666666666666664" />
-        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/menu_track.xml" value="0.36666666666666664" />
+        <entry key="..\:/Files/Programing/AndroidStudio/PlayMuzio/app/src/main/res/menu/menu_track.xml" value="0.25" />
       </map>
     </option>
   </component>

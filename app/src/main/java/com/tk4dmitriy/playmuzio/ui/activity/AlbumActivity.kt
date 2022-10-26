@@ -55,6 +55,23 @@ class AlbumActivity: AppCompatActivity() {
         )[AlbumViewModel::class.java]
     }
 
+    private var isReceiver = false
+    private var intentFilter: IntentFilter? = null
+    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ExoPlayerService.UPDATE_UI) {
+                if (ExoPlayerService.CURRENT_TRACK_URL.isNotEmpty()) {
+                    albumTracksAdapter.deselectOldTrack()
+                    if (trackPreviewUrls.contains(ExoPlayerService.CURRENT_TRACK_URL)) {
+                        val positionTrackPlayed = trackPreviewUrls.indexOf(ExoPlayerService.CURRENT_TRACK_URL)
+                        albumTracksAdapter.selectNewTrack(positionTrackPlayed)
+                    }
+                }
+            }
+            isReceiver = true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album)
@@ -79,6 +96,21 @@ class AlbumActivity: AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) finish()
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        intentFilter = IntentFilter()
+        intentFilter!!.addAction(ExoPlayerService.UPDATE_UI)
+        registerReceiver(receiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isReceiver) {
+            unregisterReceiver(receiver)
+            isReceiver = false
+        }
     }
 
     override fun onResume() {

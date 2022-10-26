@@ -133,8 +133,8 @@
         <ImageView
             android:id="@id/exo_repeat_toggle"
             style="@style/ExoMediaButton"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

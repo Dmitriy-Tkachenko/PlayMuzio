@@ -57,9 +57,10 @@
 
                 <TextView
                     android:id="@+id/tv_toolbar"
-                    android:layout_width="280dp"
+                    android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="60dp"
                     android:gravity="center"
                     android:singleLine="true"
                     android:focusable="true"
@@ -113,7 +114,6 @@
                         android:id="@+id/tv_artist_name"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
                         android:fontFamily="@font/open_sans_regular"
                         android:gravity="center"
                         tools:text="Imagine Dragons"
@@ -159,6 +159,7 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="0.25">
 
         <com.google.android.exoplayer2.ui.PlayerControlView

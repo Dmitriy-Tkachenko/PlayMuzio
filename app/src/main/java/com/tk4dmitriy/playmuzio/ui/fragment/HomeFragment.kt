@@ -55,6 +55,23 @@ class HomeFragment: Fragment() {
         )[HomeViewModel::class.java]
     }
 
+    private var isReceiver = false
+    private var intentFilter: IntentFilter? = null
+    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ExoPlayerService.UPDATE_UI) {
+                if (ExoPlayerService.CURRENT_TRACK_URL.isNotEmpty()) {
+                    trackRecommendationsAdapter.deselectOldTrack()
+                    if (trackPreviewUrls.contains(ExoPlayerService.CURRENT_TRACK_URL)) {
+                        val positionTrackPlayed = trackPreviewUrls.indexOf(ExoPlayerService.CURRENT_TRACK_URL)
+                        trackRecommendationsAdapter.selectNewTrack(positionTrackPlayed)
+                    }
+                }
+            }
+            isReceiver = true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         featuredPlaylistsAdapter = HomeFeaturedPlaylistsAdapter()
@@ -74,6 +91,21 @@ class HomeFragment: Fragment() {
         observeFeaturedPlaylists()
         observeNewReleases()
         observeTrackRecommendations()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        intentFilter = IntentFilter()
+        intentFilter!!.addAction(ExoPlayerService.UPDATE_UI)
+        requireActivity().registerReceiver(receiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isReceiver) {
+            requireActivity().unregisterReceiver(receiver)
+            isReceiver = false
+        }
     }
 
     override fun onResume() {

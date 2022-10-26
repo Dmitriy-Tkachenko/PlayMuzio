@@ -1,6 +1,9 @@
 package com.tk4dmitriy.playmuzio.ui.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -56,6 +59,23 @@ class PlaylistActivity: AppCompatActivity() {
         )[PlaylistViewModel::class.java]
     }
 
+    private var isReceiver = false
+    private var intentFilter: IntentFilter? = null
+    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ExoPlayerService.UPDATE_UI) {
+                if (ExoPlayerService.CURRENT_TRACK_URL.isNotEmpty()) {
+                    playlistAdapter.deselectOldTrack()
+                    if (trackPreviewUrls.contains(ExoPlayerService.CURRENT_TRACK_URL)) {
+                        val positionTrackPlayed = trackPreviewUrls.indexOf(ExoPlayerService.CURRENT_TRACK_URL)
+                        playlistAdapter.selectNewTrack(positionTrackPlayed)
+                    }
+                }
+            }
+            isReceiver = true
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
@@ -69,6 +89,21 @@ class PlaylistActivity: AppCompatActivity() {
             val playlistDescription = this.getString(PLAYLIST_DESCRIPTION)
             bindData(playlistImageUrl = playlistImageUrl!!, playlistName = playlistName!!, playlistDescription = playlistDescription!!)
             observePlaylist(url = playlistUrl!!)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        intentFilter = IntentFilter()
+        intentFilter!!.addAction(ExoPlayerService.UPDATE_UI)
+        registerReceiver(receiver, intentFilter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isReceiver) {
+            unregisterReceiver(receiver)
+            isReceiver = false
         }
     }
 

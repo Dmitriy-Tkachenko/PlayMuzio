@@ -114,6 +114,7 @@ class ExoPlayerService: Service(), Player.Listener {
                     val trackImageUrl = mediaItem?.mediaMetadata?.artworkUri.toString()
                     CURRENT_TRACK_URL = mediaItem?.mediaId.toString()
                     updateTrackUI(trackName = trackName, trackArtist = trackArtist, trackImageUrl = trackImageUrl)
+                    updateUISub()
                 } else {
                     // Skip empty track
                     if (newPosition > oldPosition) exoPlayer.seekToNextMediaItem()
@@ -155,8 +156,6 @@ class ExoPlayerService: Service(), Player.Listener {
                     exoPlayer.prepare()
                     exoPlayer.seekToDefaultPosition(trackPosition)
                     exoPlayer.play()
-
-                    Log.d(this@ExoPlayerService.TAG, "${exoPlayer.currentMediaItem?.mediaMetadata?.title}, ${exoPlayer.currentMediaItem?.mediaId}")
 
                     CURRENT_TRACK_URL = exoPlayer.currentMediaItem?.mediaId.toString()
                 }
@@ -204,6 +203,12 @@ class ExoPlayerService: Service(), Player.Listener {
         sendBroadcast(intent)
     }
 
+    private fun updateUISub() {
+        val intent = Intent()
+        intent.action = UPDATE_UI
+        sendBroadcast(intent)
+    }
+
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
         mediaSessionCompat.release()
@@ -224,6 +229,7 @@ class ExoPlayerService: Service(), Player.Listener {
 
             override fun createCurrentContentIntent(player: Player): PendingIntent? {
                 val intent = Intent(this@ExoPlayerService, TrackPlayActivity::class.java)
+                intent.action = START_FROM_NOTIFICATION
                 intent.putExtra(TRACK_NAME, exoPlayer.currentMediaItem?.mediaMetadata?.title)
                 intent.putExtra(TRACK_ARTIST, exoPlayer.currentMediaItem?.mediaMetadata?.artist)
                 intent.putExtra(TRACK_IMAGE_URL, exoPlayer.currentMediaItem?.mediaMetadata?.artworkUri.toString())

@@ -1,39 +1,32 @@
 package com.tk4dmitriy.playmuzio.ui.activity
 
+import android.R.attr.button
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.*
-import android.content.res.Resources
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.util.TypedValue
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.View.OnLayoutChangeListener
 import android.view.animation.AnticipateOvershootInterpolator
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
-import androidx.core.widget.NestedScrollView
+import androidx.core.view.get
+import androidx.core.view.setMargins
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.AppBarLayout.Behavior.DragCallback
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.imageview.ShapeableImageView
 import com.tk4dmitriy.playmuzio.R
@@ -73,9 +66,8 @@ class TrackPlayActivity: AppCompatActivity() {
     private var startTrackImageAnimatePointY = 0F
     private var animateWeight: Float = 0F
     private var margin: Float = 0F
-    private val upperLimitTransparently = ABROAD * 0.8
+    private val upperLimitTransparently = ABROAD * 0.75
     private var isCalculated = false
-    private var isStart = true
 
     private var trackName: String = ""
     private var trackArtist: String = ""
@@ -138,6 +130,8 @@ class TrackPlayActivity: AppCompatActivity() {
         setContentView(R.layout.activity_track_play)
         setupUI()
 
+        Log.d(this@TrackPlayActivity.TAG, "onCreate")
+
         serviceIntent = Intent(this@TrackPlayActivity, ExoPlayerService::class.java)
         intentFilter = IntentFilter()
         intentFilter!!.addAction(ExoPlayerService.UPDATE_TRACK_UI)
@@ -164,6 +158,10 @@ class TrackPlayActivity: AppCompatActivity() {
                     else trackImageUrls[trackPosition]
 
                 startService(trackPreviewUrls, trackNames, trackArtists, trackImageUrls, trackPosition)
+            } else if (intent.action == START_FROM_NOTIFICATION) {
+                trackName = intent.getStringExtra(TRACK_NAME) ?: ""
+                trackArtist = intent.getStringExtra(TRACK_ARTIST) ?: ""
+                trackImageUrl = intent.getStringExtra(TRACK_IMAGE_URL) ?: ""
             }
         }
 
@@ -171,11 +169,13 @@ class TrackPlayActivity: AppCompatActivity() {
         updateUi(trackName, trackArtist, trackImageUrl)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_track, menu)
         if (collapseState?.first == TO_COLLAPSED_STATE) {
             for (i in 0 until menu.size()) menu.getItem(i).isVisible = false
         }
+
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -212,12 +212,16 @@ class TrackPlayActivity: AppCompatActivity() {
         playerControlView = findViewById(R.id.player_control)
         coordinatorLayout = findViewById(R.id.coordinator_layout)
 
+        sivTrackImage.setOnClickListener {
+            openOptionsMenu()
+        }
+
         calculateAnimation()
+        deleteExtraPaddingPortrait()
         setSupportActionBar(toolBarLayout)
-        deleteExtraPadding()
     }
 
-    private fun deleteExtraPadding() {
+    private fun deleteExtraPaddingPortrait() {
         ViewCompat.setOnApplyWindowInsetsListener(appBarLayout) { _, insets ->
             (toolBarLayout.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
                 insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
@@ -290,12 +294,21 @@ class TrackPlayActivity: AppCompatActivity() {
         appBarLayout.addOnOffsetChangedListener(
             AppBarLayout.OnOffsetChangedListener { appBarLayout, currentScroll ->
                 if (isCalculated.not()) {
-                    expandedTrackImageSize = resources.getDimension(R.dimen.expand_track_image_size)
-                    collapsedTrackImageSize = resources.getDimension(R.dimen.collapsed_image_size)
-                    expandedArtistNameSize = resources.getDimension(R.dimen.expanded_artist_name_size)
-                    collapsedArtistNameSize = resources.getDimension(R.dimen.collapsed_artist_name_size)
-                    expandedTrackNameSize = resources.getDimension(R.dimen.expanded_track_name_size)
-                    collapsedTrackNameSize = resources.getDimension(R.dimen.collapsed_track_name_size)
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        expandedTrackImageSize = resources.getDimension(R.dimen.expand_track_image_size)
+                        collapsedTrackImageSize = resources.getDimension(R.dimen.collapsed_image_size)
+                        expandedArtistNameSize = resources.getDimension(R.dimen.expanded_artist_name_size)
+                        collapsedArtistNameSize = resources.getDimension(R.dimen.collapsed_artist_name_size)
+                        expandedTrackNameSize = resources.getDimension(R.dimen.expanded_track_name_size)
+                        collapsedTrackNameSize = resources.getDimension(R.dimen.collapsed_track_name_size)
+                    } else {
+                        expandedTrackImageSize = resources.getDimension(R.dimen.expand_track_image_size_land)
+                        collapsedTrackImageSize = resources.getDimension(R.dimen.collapsed_image_size)
+                        expandedArtistNameSize = resources.getDimension(R.dimen.expanded_artist_name_size_land)
+                        collapsedArtistNameSize = resources.getDimension(R.dimen.collapsed_artist_name_size)
+                        expandedTrackNameSize = resources.getDimension(R.dimen.expanded_track_name_size_land)
+                        collapsedTrackNameSize = resources.getDimension(R.dimen.collapsed_track_name_size)
+                    }
                     margin = resources.getDimension(R.dimen.collapsed_track_image_margin)
                     startTrackImageAnimatePointY = 0F
                     animateWeight = 1 / (1 - startTrackImageAnimatePointY)
@@ -303,13 +316,13 @@ class TrackPlayActivity: AppCompatActivity() {
                 }
 
                 val offset = abs(currentScroll / appBarLayout.totalScrollRange.toFloat())
-                Log.d(this@TrackPlayActivity.TAG, offset.toString())
-                updateViews(percentOffset = offset, currentScroll = currentScroll)
+                updateViews(percentOffset = offset)
             }
         )
     }
 
-    private fun updateViews(percentOffset: Float, currentScroll: Int) {
+    private fun updateViews(percentOffset: Float) {
+        Log.d(this@TrackPlayActivity.TAG, percentOffset.toString())
         when {
             percentOffset > upperLimitTransparently -> llTrackDetails.visibility = View.GONE
             percentOffset < upperLimitTransparently -> llTrackDetails.visibility = View.VISIBLE
@@ -323,23 +336,17 @@ class TrackPlayActivity: AppCompatActivity() {
 
         result.apply {
             collapseState = if (collapseState != this && collapseState != null) {
-                Log.d(this@TrackPlayActivity.TAG, "if")
                 when (first) {
                     TO_EXPANDED_STATE -> toExpandedState()
                     TO_COLLAPSED_STATE -> toCollapsedState()
                 }
                 Pair(first, SWITCHED)
             } else {
-                Log.d(this@TrackPlayActivity.TAG, "else")
                 if (percentOffset > startTrackImageAnimatePointY && percentOffset <= 1.0f) {
                     changeTrackImageSize(percentOffset = percentOffset)
                     changeTrackName(percentOffset = percentOffset)
                     changeArtistName(percentOffset = percentOffset)
                 }
-                if (isStart) {
-                    changeTrackDetails(currentScroll = currentScroll)
-                    isStart = false
-                } else if (percentOffset > 0.0f && percentOffset <= 1.0f) changeTrackDetails(currentScroll = currentScroll)
                 Pair(first, WAIT_FOR_SWITCH)
             }
         }
@@ -394,26 +401,8 @@ class TrackPlayActivity: AppCompatActivity() {
                 val animateOffset = (percentOffset - startTrackImageAnimatePointY) * 1
                 val textSize = expandedArtistNameSize - (expandedArtistNameSize - collapsedArtistNameSize) * animateOffset
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
-                val margin = 16 - (16 - 4) * animateOffset
-                (layoutParams as LinearLayout.LayoutParams).also {
-                    it.topMargin = margin.toInt()
-                }
                 paint.isSubpixelText = true
                 paint.isLinearText = true
-            }
-        }
-    }
-
-    private fun changeTrackDetails(currentScroll: Int) {
-        llTrackDetails.post {
-            llTrackDetails.apply {
-                val margin = ((((appBarLayout.height - getStatusBarHeight() + currentScroll) - sivTrackImage.height) / 4) - height / 2)
-                (layoutParams as CollapsingToolbarLayout.LayoutParams).also {
-                    if (it.bottomMargin != margin) {
-                        it.bottomMargin = margin
-                        requestLayout()
-                    }
-                }
             }
         }
     }
@@ -456,20 +445,12 @@ class TrackPlayActivity: AppCompatActivity() {
         }
     }
 
-    private fun getStatusBarHeight(): Int {
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId)
-        }
-        return result
-    }
-
     companion object {
         // action
         const val START_FROM_ALBUM = "START_FROM_ALBUM"
         const val START_FROM_PLAYLIST = "START_FROM_PLAYLIST"
         const val START_FROM_RECOMMENDATIONS = "START_FROM_RECOMMENDATIONS"
+        const val START_FROM_NOTIFICATION = "START_FROM_NOTIFICATION"
 
         // extra
         const val TRACK_PREVIEW_URLS = "TRACK_PREVIEW_URLS"
