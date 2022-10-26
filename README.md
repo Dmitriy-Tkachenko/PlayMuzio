@@ -52,7 +52,7 @@
 ![До кэширования](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/Caching1.gif)
 Второй запрос (после кэширования):
 
-![После кэширования](https://github.com/Dmitriy-Tkachenko/PlayMuzio/tree/master/readme-images/Caching2.gif)
+![После кэширования](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/Caching2.gif)
 
 ## Дальнейшие ближайшие планы на разработку:
 1. Добавление раздела "Похожие альбомы" на экран выбранного альбома
