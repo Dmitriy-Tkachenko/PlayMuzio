@@ -9,9 +9,7 @@
 На следующих анимациях можно увидеть раздел Featured Playlists и пример работы:
 
 ![FeaturedPlaylists](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists.gif)
-
 ![Playlist1](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists1.gif)
-
 ![Playlist2](https://github.com/Dmitriy-Tkachenko/PlayMuzio/blob/master/readme-images/FeaturedPlaylists2.gif)
 
 ## Раздел New Releases
